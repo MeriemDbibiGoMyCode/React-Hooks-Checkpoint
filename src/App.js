@@ -1,23 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import { Data } from "./Data";
+import MovieList from "./Components/MovieList";
+import AddMovie from "./Components/AddMovie";
+import SearchMovie from "./Components/SearchMovie";
+import Rating from "./Components/Rating";
 
 function App() {
+  const [movie, setMovie] = useState(Data);
+  const [search, setSearch] = useState("");
+  const [rating, setRating] = useState(1);
+  //partie remove :
+  const deleteHAndler = (ID) => {
+    setMovie(movie.filter((e) => e.id !== ID));
+  };
+
+  //done and not done
+  const handleDone = (ID) => {
+    setMovie(
+      movie.map((el) => (el.id === ID ? { ...el, isDone: !el.isDone } : el))
+    );
+  };
+
+  // /function add element :
+  const handleAdd = (newMovie) => {
+    setMovie([...movie, newMovie]);
+  };
+
+  // Search
+  //const handleSearch=(e)=>{}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchMovie setSearch={setSearch} />
+      <Rating setRating={setRating} rating={rating} />
+      <MovieList
+        movie={movie}
+        deleteHAndler={deleteHAndler}
+        handleDone={handleDone}
+        handleAdd={handleAdd}
+        search={search}
+        rating={rating}
+      />
+      <hr />
+      <p>Add Movie </p>
+      <AddMovie handleAdd={handleAdd} />
     </div>
   );
 }
