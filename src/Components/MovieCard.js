@@ -1,5 +1,7 @@
 import React from "react";
 import Rating from "react-rating-stars-component";
+
+import { Link } from 'react-router-dom';
 const MovieCard = ({ movie, deleteHAndler, handleDone }) => {
   return (
     <div>
@@ -12,6 +14,8 @@ const MovieCard = ({ movie, deleteHAndler, handleDone }) => {
         {" "}
         {movie.isDone ? "Yep you did it " : "Done"}{" "}
       </button>
+      <Link to={`/movies/${movie.id}`}>more Details</Link>
+      
     </div>
   );
 };
